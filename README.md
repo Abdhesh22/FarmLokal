@@ -28,7 +28,7 @@ npm install
 
 ## 🔐 Environment Setup
 
-Create a `.env` file inside the `server` folder:
+Create a `.env` file inside the `FarmLokal` folder:
 
 ```env
 # OAuth Configuration
