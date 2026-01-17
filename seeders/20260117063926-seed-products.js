@@ -1,21 +1,14 @@
-import type { QueryInterface } from 'sequelize';
-import { faker } from '@faker-js/faker';
+'use strict';
 
-interface ProductRow {
-  name: string;
-  description: string;
-  category: string;
-  price: number;
-  createdAt: Date;
-}
+const { faker } = require('@faker-js/faker');
 
-export default {
-  async up(queryInterface: QueryInterface): Promise<void> {
+module.exports = {
+  async up(queryInterface) {
     const TOTAL = 1_000_000;
     const BATCH = 5000;
 
     for (let i = 0; i < TOTAL; i += BATCH) {
-      const rows: ProductRow[] = [];
+      const rows = [];
 
       for (let j = 0; j < BATCH; j++) {
         rows.push({
@@ -29,8 +22,9 @@ export default {
             'bakery',
             'beverages',
           ]),
-          price: faker.number.float({ min: 10, max: 500, fractionDigits: 2 }),
-          createdAt: faker.date.past({ years: 1 })
+          price: faker.number.float({ min: 10, max: 500, precision: 0.01 }),
+          createdAt: faker.date.past({ years: 1 }),
+          updatedAt: new Date(),
         });
       }
 
@@ -39,7 +33,7 @@ export default {
     }
   },
 
-  async down(queryInterface: QueryInterface): Promise<void> {
-    await queryInterface.bulkDelete('products', {}, {});
+  async down(queryInterface) {
+    await queryInterface.bulkDelete('products', null, {});
   },
 };
