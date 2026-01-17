@@ -9,11 +9,9 @@ import {
 import { Request, Response } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
-
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
     private readonly logger = new Logger(GlobalExceptionFilter.name);
-    private readonly logFile = path.join(process.cwd(), 'logs', 'error.log');
 
     catch(exception: unknown, host: ArgumentsHost) {
         const ctx = host.switchToHttp();
@@ -26,6 +24,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         if (exception instanceof HttpException) {
             status = exception.getStatus();
             message = exception.message;
+        } else if (exception instanceof Error) {
+            message = exception.message;
         }
 
         const log = {
@@ -37,17 +37,14 @@ export class GlobalExceptionFilter implements ExceptionFilter {
             stack: exception instanceof Error ? exception.stack : undefined,
         };
 
-
         this.logger.error(log);
-
         this.writeToFile(log);
 
         response.status(status).json({
             statusCode: status,
-            message,
+            message: 'Internal server error',
             path: request.url,
             timestamp: log.timestamp,
-
         });
     }
 
@@ -55,10 +52,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         const date = new Date().toISOString().split('T')[0];
         const dir = path.join(process.cwd(), 'logs');
 
-        if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
         const file = path.join(dir, `${date}.log`);
         fs.appendFileSync(file, JSON.stringify(log) + '\n');
     }
-
 }

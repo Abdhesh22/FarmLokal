@@ -9,6 +9,7 @@ import { ProductsModule } from './products/products.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import databaseConfig from './config/database.config';
 import { ConfigType } from '@nestjs/config';
+import { RedisModule } from './redis/redis.module';
 
 
 @Module({
@@ -38,6 +39,7 @@ import { ConfigType } from '@nestjs/config';
     ExternalModule,
     WebhookModule,
     ProductsModule,
+    RedisModule,
   ],
   providers: [RedisService, WebhookService],
 })
