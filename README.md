@@ -1,6 +1,6 @@
 # FarmLokal Backend Assignment
 
-Production-ready backend implementing OAuth2 authentication, external API integrations, and a high-performance product listing API using Nodejs, NestJS, MySQL, Redis, and TypeScript.
+Production-ready backend implementing OAuth2 authentication, external API integrations, and a high-performance product listing API using **Node.js, NestJS, MySQL, Redis, and TypeScript**.
 
 ---
 
@@ -16,9 +16,19 @@ Make sure you have the following installed:
 
 ---
 
+## ⚙ Installation
+
+```bash
+git clone git@github.com:Abdhesh22/FarmLokal.git
+cd FarmLokal/server
+npm install
+```
+
+---
+
 ## 🔐 Environment Setup
 
-Create a `.env` file in the project root:
+Create a `.env` file inside the `server` folder:
 
 ```env
 # OAuth Configuration
@@ -38,16 +48,6 @@ DB_PASSWORD=
 # Redis
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
-```
-
----
-
-## ⚙ Installation
-
-```bash
-git clone git@github.com:Abdhesh22/FarmLokal.git
-cd server
-npm install
 ```
 
 ---
@@ -98,20 +98,18 @@ No manual token handling required.
 GET /products
 ```
 
-### Query Parameters (DTO)
+### Query Parameters
 
-```ts
-export class GetProductsQueryDto {
-  cursor?: number;       // Cursor based pagination
-  limit?: number = 20;   // Max 100
-  sort?: 'price' | 'createdAt' | 'name' | 'id';
-  order?: 'asc' | 'desc';
-  search?: string;       // name / description
-  category?: string;
-  minPrice?: number;
-  maxPrice?: number;
-}
-```
+| Param    | Type   | Description                           |
+| -------- | ------ | ------------------------------------- |
+| cursor   | number | Cursor for pagination                 |
+| limit    | number | Page size (default 20, max 100)       |
+| sort     | string | `price` | `createdAt` | `name` | `id` |
+| order    | string | `asc` | `desc`                        |
+| search   | string | Search by name or description         |
+| category | string | Filter by category                    |
+| minPrice | number | Minimum price                         |
+| maxPrice | number | Maximum price                         |
 
 ### Example
 
@@ -180,4 +178,4 @@ logs/YYYY-MM-DD.log
 
 ## 📝 Author
 
-Abdhesh Kumar
+**Abdhesh Kumar**
