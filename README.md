@@ -20,7 +20,7 @@ Make sure you have the following installed:
 
 ```bash
 git clone git@github.com:Abdhesh22/FarmLokal.git
-cd FarmLokal/server
+cd FarmLokal
 npm install
 ```
 
